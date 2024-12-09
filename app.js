@@ -5,7 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-//var usersRouter = require('./routes/users');
+var bundesRouter = require('./routes/bundes');
+var eurosportRouter = require('./routes/eurosport');
+var globalsportRouter = require('./routes/globalsport');
+var goalRouter = require('./routes/goal');
+var yahooRouter = require('./routes/yahoo');
 
 var app = express();
 
@@ -20,15 +24,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+app.use('/bundesliga', bundesRouter);
+app.use('/eurosport', eurosportRouter);
+app.use('/globalsportarchive', globalsportRouter);
+app.use('/goal', goalRouter);
+app.use('/yahoo', yahooRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
