@@ -3,25 +3,30 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.list-group{
+height: 600px;
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
 }
 
-h1{
-  text-align: center;
+@media (max-width: 768px){
+  .list-group{
+  height: 300px;
 }
-
-p{
-  font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
-  text-align: center;
 }
-
-#resources-list{
-  width: 600px;
-  padding-top: 10px;
-  margin: auto;
+@media (min-width: 768px) and (max-width: 1024px) {
+  .list-group{
+  height: 350px;
 }
-
-#subtitle{
-  padding-top: 10px;
+}
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .list-group{
+  height: 400px;
+}
+}
+@media (min-width: 1440px) {
+  .list-group{
+  height: 500px;
+}
 }

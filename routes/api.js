@@ -265,6 +265,62 @@ async function goal_get_data(){
 router.get('/goal/', async function(req, res, next) {
   const goal_data = await goal_get_data();
   res.json(goal_data);
+});
+
+async function get_yahoo_data(){
+  const games = await yahoo_table.findAll({raw: true});
+  const wins = {};
+  const scored_goals = {};
+  const conceded_goals = {};
+
+  games.forEach(game => {
+    const home_team_name = game.home_team_name;
+    const away_team_name = game.away_team_name;
+    const home_team_goals = game.home_team_goals;
+    const away_team_goals = game.away_team_goals;
+
+    if (home_team_goals > away_team_goals) wins[home_team_name] = (wins[home_team_name] || 0) + 1;
+    else if (away_team_goals > home_team_goals) wins[away_team_name] = (wins[away_team_name] || 0) + 1;
+    scored_goals[home_team_name] = (scored_goals[home_team_name] || 0) + home_team_goals;
+    scored_goals[away_team_name] = (scored_goals[away_team_name] || 0) + away_team_goals;
+    conceded_goals[home_team_name] = (conceded_goals[home_team_name] || 0) + away_team_goals;
+    conceded_goals[away_team_name] = (conceded_goals[away_team_goals] || 0) + home_team_goals;
+  });
+  
+  const results = Object.entries(wins)
+  .map(([team, total_wins]) => ({team, total_wins}))
+  .sort((a, b) => b.total_wins - a.total_wins);
+
+  results.forEach(result => {
+    result.scored_goals = scored_goals[result.team];
+    result.conceded_goals = conceded_goals[result.team];
+  });
+
+  const teams_array = [];
+  const wins_array = [];
+  const scored_goals_array = [];
+  const conceded_goals_array = [];
+
+  results.forEach(result => {
+    teams_array.push(result.team);
+    wins_array.push(result.total_wins || 0);
+    scored_goals_array.push(result.scored_goals || 0);
+    conceded_goals_array.push(result.conceded_goals * -1 || 0);  
+  });
+
+  const yahoo_data = {
+    teams: teams_array,
+    wins: wins_array,
+    scored_goals: scored_goals_array,
+    conceded_goals: conceded_goals_array
+  };
+
+  return yahoo_data;
+}
+
+router.get('/yahoo/', async function(req, res, next){
+  const yahoo_data = await get_yahoo_data();
+  res.json(yahoo_data);
 })
 
 module.exports = router;

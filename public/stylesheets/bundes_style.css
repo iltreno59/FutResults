@@ -2,3 +2,31 @@ body {
     padding: 50px;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   }
+
+.graph-container{
+  height: 600px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px){
+  .graph-container{
+    height: 300px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .graph-container{
+    height: 350px;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .graph-container{
+    height: 400px;
+  }
+}
+@media (min-width: 1440px) {
+  .graph-container{
+    height: 500px;
+  }
+}
