@@ -10,6 +10,7 @@ var eurosportRouter = require('./routes/eurosport');
 var globalsportRouter = require('./routes/globalsport');
 var goalRouter = require('./routes/goal');
 var yahooRouter = require('./routes/yahoo');
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/eurosport', eurosportRouter);
 app.use('/globalsportarchive', globalsportRouter);
 app.use('/goal', goalRouter);
 app.use('/yahoo', yahooRouter);
+app.use('/api/', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

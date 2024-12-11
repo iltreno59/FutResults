@@ -13,6 +13,9 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "plotly.js-dist": "^2.35.2"
+    "pg": "^8.13.1",
+    "pg-promise": "^11.10.2",
+    "plotly.js-dist": "^2.35.2",
+    "sequelize": "^6.37.5"
   }
 }

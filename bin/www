@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('futresults:server');
 var http = require('http');
+const { sequelize } = require('../../../Sport_parser/connection.js');
 
 /**
  * Get port from environment and store in Express.
@@ -25,7 +26,17 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
+async function connect(){
+  try {
+      await sequelize.authenticate();
+      console.log('Соединение с БД было успешно установлено');
+  } catch (e) {
+      console.log('Невозможно выполнить подключение к БД: ', e);
+  }
+}
+
 server.listen(port);
+connect();
 server.on('error', onError);
 server.on('listening', onListening);
 
